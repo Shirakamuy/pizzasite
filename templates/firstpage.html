@@ -8,4 +8,15 @@
 <div class="container text-center">
   <h2>Ласкаво просимо до нашої піцерії!</h2>
 </div>
+<div class="weather-info">
+  {% if weather %}
+    <h3>Погода у Варшаві на сьогодні:</h3>
+    <div>
+      <p>Температура: {{ weather.temp }}°C</p>
+      <p>Опис: {{ weather.description }}</p>
+    </div>
+  {% else %}
+    <p>Не вдалося отримати інформацію про погоду. Спробуйте пізніше.</p>
+  {% endif %}
+</div>
 {% endblock %}

@@ -1,11 +1,30 @@
-from flask import Flask, render_template, request
+import requests
+from flask import Flask, render_template, request, jsonify
 import sqlite3
 
 app = Flask(__name__)
 
 @app.get("/")
 def first_page():
-    return render_template("firstpage.html", title="Oderman", order="Замовлення", news="Новини", menu_pizza="Меню піццерії")
+    location = "Warsaw"
+    weather_data = requests.get(
+        f"http://api.openweathermap.org/data/2.5/weather?q={location}&appid=c5a15a87cf2ee0765b0ec6ce5bc3b372&units=metric"
+    ).json()
+
+    weather = {
+        "temp": weather_data["main"]["temp"],
+        "description": weather_data["weather"][0]["description"],
+    }
+
+    return render_template(
+        "firstpage.html",
+        title="Oderman",
+        weather=weather,
+        order="Замовлення",
+        news="Новини",
+        menu_pizza="Меню піццерії",
+    )
+
 
 @app.get("/menu/")
 def menu_list():
